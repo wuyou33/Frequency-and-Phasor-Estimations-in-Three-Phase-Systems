@@ -54,8 +54,8 @@ for indice in range(Nb_trials):
         estimated_signal = estimator.fit(X)
 
         # FE and TVE Metric
-        FE = FE_metric(signal.w, estimated_signal.w, Fs)
-        TVE = TVE_metric(signal.c, estimated_signal.c)
+        FE = FE_metric(signal, estimated_signal, Fs)
+        TVE = TVE_metric(signal, estimated_signal)
 
         FE_compliance[index_estimator] = FE_compliance[index_estimator] + (FE < 0.005)
         TVE_compliance[index_estimator, :] = TVE_compliance[index_estimator, :] + (TVE < 0.01*np.ones(3))
@@ -67,9 +67,8 @@ PTVE_compliance_exp = TVE_compliance/Nb_trials
 for index_estimator in range(nb_estimators):
 
     estimator = estimator_list[index_estimator]
-    preprocessing = estimator.preprocessing
-    PFE_compliance_theo = probability_FE_compliance(signal.c, signal.sigma2, N, Fs, preprocessing=preprocessing)
-    PTVE_compliance_theo = probability_TVE_compliance(signal.c, signal.sigma2, N, Fs, preprocessing=preprocessing)
+    PFE_compliance_theo = probability_FE_compliance(signal, estimator, N, Fs)
+    PTVE_compliance_theo = probability_TVE_compliance(signal, estimator, N, Fs)
 
     print("\n--- Estimator: {} ---".format(estimator_name[index_estimator]))
     print("* Probability of FE Compliance")

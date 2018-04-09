@@ -36,8 +36,13 @@ def compute_nu(c, preprocessing=None, L=2):
 
 
 # Probability of Compliance
-def probability_FE_compliance(c, sigma2, N, Fs, preprocessing=None, L=2, tf=0.005):
+def probability_FE_compliance(model, estimator, N, Fs=1, tf=0.005):
 
+    c = model.c
+    sigma2 = model.sigma2
+    preprocessing = estimator.preprocessing
+    L = estimator.L
+    
     eta = np.sum(np.abs(c)**2)/(6*sigma2)
     nu = compute_nu(c, preprocessing=preprocessing, L=L)
     criterion = np.pi*tf*np.sqrt(nu*eta*(N**3))/Fs
@@ -45,7 +50,12 @@ def probability_FE_compliance(c, sigma2, N, Fs, preprocessing=None, L=2, tf=0.00
     return probability
 
 
-def probability_TVE_compliance(c, sigma2, N, Fs, preprocessing=None, L=2, tv=0.01):
+def probability_TVE_compliance(model, estimator, N, Fs=1, tv=0.01):
+
+    c = model.c
+    sigma2 = model.sigma2
+    preprocessing = estimator.preprocessing
+    L = estimator.L
 
     probability = np.zeros(3)
     eta = np.sum(np.abs(c)**2)/(6*sigma2)
@@ -69,8 +79,13 @@ def probability_TVE_compliance(c, sigma2, N, Fs, preprocessing=None, L=2, tv=0.0
 
 
 # Cramer Rao Bounds
-def CRB_w(c, sigma2, N, Fs):
-
+def CRB_w(model, estimator, N):
+    
+    c = model.c
+    sigma2 = model.sigma2
+    preprocessing = estimator.preprocessing
+    L = estimator.L
+    
     nu = compute_nu(c, preprocessing=preprocessing, L=L)
     eta = np.sum(np.abs(c)**2)/(6*sigma2)
 

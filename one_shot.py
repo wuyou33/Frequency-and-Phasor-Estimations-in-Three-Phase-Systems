@@ -22,8 +22,8 @@ estimated_signal = estimator.fit(X)
 print("w: {}\nc: {}  ".format(estimated_signal.w, estimated_signal.c))
 
 print(" --- Metric --- ")
-FE = 100*FE_metric(signal.w, estimated_signal.w, Fs)
-TVE = 100*TVE_metric(signal.c, estimated_signal.c)
+FE = 100*FE_metric(signal, estimated_signal, Fs)
+TVE = 100*TVE_metric(signal, estimated_signal)
 
 print("Frequency Error (FE %): {} ".format(FE))
 print("Total Vector Error (TVE %): {}".format(TVE))
